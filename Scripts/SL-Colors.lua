@@ -10,7 +10,7 @@ function GetHexColor( n, decorative )
 	if decorative then
 		colorTable = SL.DecorativeColors
 	end
-	if style == "SRPG9" then
+	if string.match(style, "SRPG") then
 		colorTable = SL.SRPG9.Colors
 	end
 
@@ -19,7 +19,7 @@ function GetHexColor( n, decorative )
 	local clr = ((n - 1) % #colorTable) + 1
 	if colorTable[clr] then
 		local c = color(colorTable[clr])
-		if style == "SRPG9" and not decorative then
+		if string.match(style, "SRPG") and not decorative then
 			c = LightenColor(c)
 		end
 		return c

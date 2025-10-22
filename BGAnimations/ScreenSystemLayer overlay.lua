@@ -1,10 +1,12 @@
 -- This is mostly copy/pasted directly from SM5's _fallback theme with
 -- very minor modifications.
 
+local style = ThemePrefs.Get("VisualStyle")
+
 local t = Def.ActorFrame{
 	InitCommand=function(self)
-		-- In case we loaded the theme with SRPG9 and had Rainbow Mode enabled, disable it.
-		if ThemePrefs.Get("VisualStyle") == "SRPG9" and ThemePrefs.Get("RainbowMode") == true then
+		-- In case we loaded the theme with SRPG8 and had Rainbow Mode enabled, disable it.
+		if (style == "SRPG9" or style == "SRPG8" or style == "SRPG7") and ThemePrefs.Get("RainbowMode") == true then
 			ThemePrefs.Set("RainbowMode", false)
 			ThemePrefs.Save()
 		end
@@ -49,8 +51,8 @@ local function CreditsText( player )
 
 				local screenName = screen:GetName()
 				if screenName == "ScreenTitleMenu" or screenName == "ScreenTitleJoin" or screenName == "ScreenLogo" then
-					if ThemePrefs.Get("VisualStyle") == "SRPG9" then
-						textColor = color(SL.SRPG9.TextColor)
+					if style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
+						textColor = color(SL.SRPG8.TextColor)
 						shadowLength = 0.4
 					end
 				elseif (screen:GetName() == "ScreenEvaluationStage") or (screen:GetName() == "ScreenEvaluationNonstop") or (screen:GetName() == "ScreenGameplay") then
@@ -183,8 +185,8 @@ t[#t+1] = LoadFont("Common Footer")..{
 		local textColor = Color.White
 		local screenName = screen:GetName()
 		if screen ~= nil and (screenName == "ScreenTitleMenu" or screenName == "ScreenTitleJoin" or screenName == "ScreenLogo") then
-			if ThemePrefs.Get("VisualStyle") == "SRPG9" then
-				textColor = color(SL.SRPG9.TextColor)
+			if style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
+				textColor = color(SL.SRPG8.TextColor)
 			end
 		end
 		self:diffuse(textColor)

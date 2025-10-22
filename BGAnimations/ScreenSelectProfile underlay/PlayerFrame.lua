@@ -4,6 +4,7 @@ local profile_data = args.ProfileData
 local avatars = args.Avatars
 local scroller = args.Scroller
 local scroller_item_mt = LoadActor("./ScrollerItemMT.lua")
+local style = ThemePrefs.Get("VisualStyle")
 
 -- -----------------------------------------------------------------------
 -- TODO: start over from scratch so that these numbers make sense in SL
@@ -258,10 +259,10 @@ return Def.ActorFrame{
 								self:align(0,0):zoomto(avatar_dim,avatar_dim):diffuse(color("#283239aa"))
 							end
 						},
-						LoadActor(THEME:GetPathG("", "_VisualStyles/".. ThemePrefs.Get("VisualStyle") .."/SelectColor"))..{
+						LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/SelectColor"))..{
 							InitCommand=function(self)
 								self:align(0,0):zoom(0.09):diffusealpha(0.9):xy(13, 8)
-								if ThemePrefs.Get("VisualStyle") == "SRPG9" then
+								if string.match(style, "SRPG") then
 									self:zoom(0.3):xy(5, 0)
 								end
 							end

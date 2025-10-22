@@ -8,7 +8,7 @@ local ColorSelected = false
 local NumHeartsToDraw = IsUsingWideScreen() and 11 or 7
 
 local style = ThemePrefs.Get("VisualStyle")
-local colorTable = (style == "SRPG9") and SL.SRPG9.Colors or SL.DecorativeColors
+local colorTable = (string.match(style, "SRPG")) and SL.SRPG9.Colors or SL.DecorativeColors
 local factionBmt
 
 local text
@@ -80,7 +80,16 @@ local wheel_item_mt = {
 					self.heart = subself
 					subself:diffusealpha(0)
 					subself:zoom(0.25)
-					if style == "SRPG9" then
+					if style == "SRPG5" then
+						subself:shadowlength(3)
+					elseif style == "SRPG6" then
+						subself:blend("BlendMode_Add")
+						subself:zoom(0.35)
+					elseif style == "SRPG7" then
+						subself:zoom(0.35)
+					elseif style == "SRPG8" then
+						subself:zoom(0.7)
+					elseif style == "SRPG9" then
 						subself:zoom(0.8)
 					end
 				end,
@@ -143,7 +152,7 @@ local wheel_item_mt = {
 				self.container:effectmagnitude(0,0,0)
 			end
 
-			if style == "SRPG9" and has_focus then
+			if string.match(style, "SRPG") and has_focus then
 				local idx = self.color_index % #colorTable + 1
 				factionBmt:settext(SL.SRPG9.GetFactionName(idx))
 			end
@@ -201,7 +210,7 @@ local t = Def.ActorFrame{
 	wheel:create_actors( "ColorWheel", NumHeartsToDraw, wheel_item_mt, _screen.cx, _screen.cy )
 }
 
-if style == "SRPG9" then
+if string.match(style, "SRPG") then
 	t[#t+1] = Def.BitmapText{
 		Font="Common Normal",
 		Text=THEME:GetString("SRPG", "SelectFaction"),

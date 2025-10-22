@@ -51,6 +51,8 @@ local text = ("%s%s\n%s\n%s"):format(
 	song_stats
 )
 
+local style = ThemePrefs.Get("VisualStyle")
+
 return LoadFont("Common Normal")..{
 	Text=text,
 	InitCommand=function(self)
@@ -64,7 +66,7 @@ return LoadFont("Common Normal")..{
 		if ThemePrefs.Get("RainbowMode") and not HolidayCheer() then
 			textColor = Color.Black
 		end
-		if ThemePrefs.Get("VisualStyle") == "SRPG9" then
+		if string.match(style, "SRPG") then
 			textColor = color(SL.SRPG9.TextColor)
 			shadowLength = 0.4
 		end

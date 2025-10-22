@@ -26,6 +26,18 @@ SL.SRPG9 = {
 	GetLogo = function()
 		return "logo_main (doubleres).png"
 	end,
+	GetRPG5Logo = function()
+		local idx = SL.Global.ActiveColorIndex
+		if idx <= 3 then
+			return "logo_main (doubleres).png"
+		elseif idx <= 6 then
+			return "logo_dprt (doubleres).png"
+		elseif idx <= 9 then
+			return "logo_fe (doubleres).png"
+		else
+			return "logo_sn (doubleres).png"
+		end
+	end,
 	GetFactionName = function(idx)
 		-- Assuming that idx is 1-indexed and
 		-- follows the order of the colours above

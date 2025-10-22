@@ -17,7 +17,7 @@ end
 
 -- -----------------------------------------------------------------------
 local af = Def.ActorFrame{}
-
+local style = ThemePrefs.Get("VisualStyle")
 -- SIMPLY [something]
 af[#af+1] = Def.Sprite{
 	Name="Simply Text",
@@ -29,12 +29,27 @@ af[#af+1] = Def.Sprite{
 		self:playcommand("LoadImage")
 	end,
 	LoadImageCommand=function(self)
-		if ThemePrefs.Get("VisualStyle") == "SRPG9" then
+		if style == "SRPG9" then
 			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG9/"..SL.SRPG9.GetLogo()))
 			self:zoom(0.225):vertalign(top)
 			self:y(-115):shadowlength(0)
+		elseif style == "SRPG8" then
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG8/"..SL.SRPG9.GetLogo()))
+			self:zoom(0.225):vertalign(top)
+			self:x(-15):y(-130):shadowlength(0)
+		elseif style == "SRPG7" then
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG7/"..SL.SRPG9.GetLogo()))
+			self:zoom(0.1):vertalign(top)
+			self:y(-130):shadowlength(0)
+		elseif style == "SRPG6" then
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG6/logo_main (doubleres).png"))
+			self:zoom(0.55):vertalign(top)
+			self:y(-165):shadowlength(0)
+		elseif style == "SRPG5" then
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG5/"..SL.SRPG9.GetRPG5Logo()))
+			self:zoom(0.7):vertalign(top)
+			self:y(-120):shadowlength(0)
 		else
-			local style = ThemePrefs.Get("VisualStyle")
 			local image = THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu (doubleres).png")
 			local imageAlt = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_VisualStyles/"..style.."/TitleMenuAlt (doubleres).png"
 			if FILEMAN:DoesFileExist(imageAlt) and math.random(1,100) <= 10 then
@@ -49,7 +64,7 @@ af[#af+1] = Def.Sprite{
 }
 
 
-if ThemePrefs.Get("VisualStyle") ~= "SRPG9" then
+if not string.match(style, "SRPG") then
 	-- decorative arrows for current game (dance, pump, techno, etc.)
 	af[#af+1] = LoadActor(resolved_path)..{
 		InitCommand=function(self)
@@ -74,9 +89,9 @@ if ThemePrefs.Get("VisualStyle") ~= "SRPG9" then
 			end
 		end,
 		VisualStyleSelectedMessageCommand=function(self)
-			-- In case we auto-switch to SRPG9, then it's possible this actor may have been added to the screen.
-			-- If so, we want to hide the logo as it interferes with the SRPG9 logo.
-			if ThemePrefs.Get("VisualStyle") == "SRPG9" then
+			-- In case we auto-switch to SRPG8, then it's possible this actor may have been added to the screen.
+			-- If so, we want to hide the logo as it interferes with the SRPG8 logo.
+			if string.match(style, "SRPG") then
 				self:visible(false)
 			end
 		end
