@@ -1,4 +1,4 @@
-SL.SRPG9 = {
+SL.SRPG10 = {
 	Colors = {
 		            ----------+--------------
 		"#666000",  -- Unaff. | Yellow     --
@@ -23,9 +23,6 @@ SL.SRPG9 = {
 	-- internal flag
 	firstRun = false,
 
-	GetLogo = function()
-		return "logo_main (doubleres).png"
-	end,
 	GetRPG5Logo = function()
 		local idx = SL.Global.ActiveColorIndex
 		if idx <= 3 then
@@ -52,9 +49,9 @@ SL.SRPG9 = {
 		end
 	end,
 	ActivateVisualStyle = function(self)
-		ThemePrefs.Set("VisualStyle", "SRPG9")
+		ThemePrefs.Set("VisualStyle", "SRPG10")
 		ThemePrefs.Set("RainbowMode", false)
-		ThemePrefs.Set("LastActiveEvent", "SRPG9")
+		ThemePrefs.Set("LastActiveEvent", "SRPG10")
 		ThemePrefs.Save()
 
 		MESSAGEMAN:Broadcast("VisualStyleSelected")

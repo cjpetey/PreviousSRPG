@@ -8,7 +8,7 @@ local ColorSelected = false
 local NumHeartsToDraw = IsUsingWideScreen() and 11 or 7
 
 local style = ThemePrefs.Get("VisualStyle")
-local colorTable = (string.match(style, "SRPG")) and SL.SRPG9.Colors or SL.DecorativeColors
+local colorTable = (string.match(style, "SRPG")) and SL.SRPG10.Colors or SL.DecorativeColors
 local factionBmt
 
 local text
@@ -89,7 +89,7 @@ local wheel_item_mt = {
 						subself:zoom(0.35)
 					elseif style == "SRPG8" then
 						subself:zoom(0.7)
-					elseif style == "SRPG9" then
+					elseif style == "SRPG9" or style == "SRPG10" then
 						subself:zoom(0.8)
 					end
 				end,
@@ -154,7 +154,7 @@ local wheel_item_mt = {
 
 			if string.match(style, "SRPG") and has_focus then
 				local idx = self.color_index % #colorTable + 1
-				factionBmt:settext(SL.SRPG9.GetFactionName(idx))
+				factionBmt:settext(SL.SRPG10.GetFactionName(idx))
 			end
 		end,
 
@@ -217,7 +217,7 @@ if string.match(style, "SRPG") then
 		InitCommand=function(self)
 			self:xy(_screen.cx, 80)
 			self:zoom(1.5)
-			self:diffuse(color(SL.SRPG9.TextColor))
+			self:diffuse(color(SL.SRPG10.TextColor))
 			self:shadowlength(0.5)
 		end
 	}
@@ -230,7 +230,7 @@ if string.match(style, "SRPG") then
 
 			self:xy(_screen.cx, _screen.h - 110)
 			self:zoom(2.0)
-			self:diffuse(color(SL.SRPG9.TextColor))
+			self:diffuse(color(SL.SRPG10.TextColor))
 			self:shadowlength(0.5)
 			self:wrapwidthpixels(150)
 		end

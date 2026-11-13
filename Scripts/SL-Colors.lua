@@ -11,7 +11,7 @@ function GetHexColor( n, decorative )
 		colorTable = SL.DecorativeColors
 	end
 	if string.match(style, "SRPG") then
-		colorTable = SL.SRPG9.Colors
+		colorTable = SL.SRPG10.Colors
 	end
 
 	-- use the number passed in to lookup a color in the corresponding color table

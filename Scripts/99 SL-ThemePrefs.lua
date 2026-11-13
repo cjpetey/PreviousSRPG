@@ -16,8 +16,8 @@ end
 
 SL_CustomPrefs.Get = function()
 	 -- emojis are our lingua franca for the 21st century
-	local visualStyleChoices = { "❤", "RPG5", "RPG6", "RPG7", "RPG8", "RPG9" }
-	local visualStyleValues  = { "Hearts", "SRPG5", "SRPG6", "SRPG7", "SRPG8", "SRPG9"}
+	local visualStyleChoices = { "❤", "RPG5", "RPG6", "RPG7", "RPG8", "RPG9", "RPG10" }
+	local visualStyleValues  = { "Hearts", "SRPG5", "SRPG6", "SRPG7", "SRPG8", "SRPG9", "SRPG10" }
 
 	return {
 		AllowFailingOutOfSet =
@@ -43,6 +43,12 @@ SL_CustomPrefs.Get = function()
 			Default = "ITG",
 			Choices = { "ITG", "IIDX" }
 		},
+		HideInactiveSeries =
+		{
+			Default = false,
+			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+			Values  = { true, false }
+		},
 		AllowDanceSolo =
 		{
 			Default = false,
@@ -58,17 +64,30 @@ SL_CustomPrefs.Get = function()
 			},
 			Values = { "Casual", "ITG" }
 		},
-
-		AutoStyle =
+		DefaultSort =
+		{
+			Default = "Series",
+			Choices = {
+				THEME:GetString("ScreenSelectMusic", "Series"),
+				THEME:GetString("ScreenSelectMusic", "Group"),
+				THEME:GetString("ScreenSelectMusic", "Title"),
+				THEME:GetString("ScreenSelectMusic", "Meter"),
+				THEME:GetString("ScreenSelectMusic", "Popularity"),
+				THEME:GetString("ScreenSelectMusic", "Recent"),
+			},
+			Values = { "Series", "Group", "Title", "Meter", "Popularity", "Recent"}
+		},
+		PreferredStyle =
 		{
 			Default = "none",
 			Choices = {
 				THEME:GetString("ScreenSelectStyle", "None"),
+				THEME:GetString("ScreenSelectStyle", "Auto"),
 				THEME:GetString("ScreenSelectStyle", "Single"),
 				THEME:GetString("ScreenSelectStyle", "Versus"),
 				THEME:GetString("ScreenSelectStyle", "Double")
 			},
-			Values = { "none", "single", "versus", "double" }
+			Values = { "none", "auto", "single", "versus", "double" }
 		},
 		VisualStyle =
 		{
@@ -103,6 +122,12 @@ SL_CustomPrefs.Get = function()
 			Values	= { true, false }
 		},
 		SampleMusicLoops =
+		{
+			Default = true,
+			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+			Values  = { true, false }
+		},
+		SampleMusicStartsImmediately =
 		{
 			Default = true,
 			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
@@ -320,7 +345,13 @@ SL_CustomPrefs.Get = function()
 				THEME:GetString("ThemePrefs", "Never"),
 			},
 			Values = { "Always", "Sometimes", "Never" }
-		}
+		},
+
+		EnableOnlineLobbies = {
+			Default = false,
+			Choices =  { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+			Values  = { true, false }
+		},
 	}
 end
 

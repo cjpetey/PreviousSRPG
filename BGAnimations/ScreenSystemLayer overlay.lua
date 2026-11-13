@@ -1,12 +1,10 @@
 -- This is mostly copy/pasted directly from SM5's _fallback theme with
 -- very minor modifications.
 
-local style = ThemePrefs.Get("VisualStyle")
-
 local t = Def.ActorFrame{
 	InitCommand=function(self)
-		-- In case we loaded the theme with SRPG8 and had Rainbow Mode enabled, disable it.
-		if (style == "SRPG9" or style == "SRPG8" or style == "SRPG7") and ThemePrefs.Get("RainbowMode") == true then
+		-- In case we loaded the theme with SRPG10 and had Rainbow Mode enabled, disable it.
+		if (style == "SRPG10" or style == "SRPG9" or style == "SRPG8" or style == "SRPG7") and ThemePrefs.Get("RainbowMode") == true then
 			ThemePrefs.Set("RainbowMode", false)
 			ThemePrefs.Save()
 		end
@@ -51,11 +49,11 @@ local function CreditsText( player )
 
 				local screenName = screen:GetName()
 				if screenName == "ScreenTitleMenu" or screenName == "ScreenTitleJoin" or screenName == "ScreenLogo" then
-					if style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
-						textColor = color(SL.SRPG8.TextColor)
+					if style == "SRPG10" or style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
+						textColor = color(SL.SRPG10.TextColor)
 						shadowLength = 0.4
 					end
-				elseif (screen:GetName() == "ScreenEvaluationStage") or (screen:GetName() == "ScreenEvaluationNonstop") or (screen:GetName() == "ScreenGameplay") then
+				elseif (screen:GetName() == "ScreenEvaluationStage") or (screen:GetName() == "ScreenEvaluationNonstop") or (screen:GetName() == Branch.GameplayScreen()) then
 					-- ignore ShowCreditDisplay metric for ScreenEval
 					-- only show this BitmapText actor on Evaluation if the player is joined
 					bShow = GAMESTATE:IsHumanPlayer(player)
@@ -185,8 +183,8 @@ t[#t+1] = LoadFont("Common Footer")..{
 		local textColor = Color.White
 		local screenName = screen:GetName()
 		if screen ~= nil and (screenName == "ScreenTitleMenu" or screenName == "ScreenTitleJoin" or screenName == "ScreenLogo") then
-			if style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
-				textColor = color(SL.SRPG8.TextColor)
+			if style == "SRPG10" or style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
+				textColor = color(SL.SRPG10.TextColor)
 			end
 		end
 		self:diffuse(textColor)
@@ -352,19 +350,19 @@ local NewSessionRequestProcessor = function(res, gsInfo)
 	local easter_eggs = PREFSMAN:GetPreference("EasterEggs")
 	local game = GAMESTATE:GetCurrentGame():GetName()
 	local style = ThemePrefs.Get("VisualStyle")
-	if events ~= nil and easter_eggs and game == "dance" then
+	if events ~= nil and easter_eggs and (game == "dance" or game == "pump") then
 		local last_active_event = ThemePrefs.Get("LastActiveEvent")
 
 		for event in ivalues(events) do
-			if event["shortName"] == "SRPG9" then
-				-- If we're already on the SRPG9 theme, then set the last_active_event
+			if event["shortName"] == "SRPG10" then
+				-- If we're already on the SRPG10 theme, then set the last_active_event
 				-- if it's not already set to SRPG so that we don't bring up the prompt.
-				if last_active_event ~= "SRPG9" and style == "SRPG9" then
-					ThemePrefs.Set("LastActiveEvent", "SRPG9")
-					last_active_event = "SRPG9"
+				if last_active_event ~= "SRPG10" and style == "SRPG10" then
+					ThemePrefs.Set("LastActiveEvent", "SRPG10")
+					last_active_event = "SRPG10"
 				end
 			
-				if last_active_event ~= "SRPG9" then
+				if last_active_event ~= "SRPG10" then
 					local top_screen = SCREENMAN:GetTopScreen()
 					top_screen:SetNextScreenName("ScreenPromptToSetSrpgVisualStyle"):StartTransitioningScreen("SM_GoToNextScreen")
 					break
@@ -402,8 +400,8 @@ local function DiffuseText(bmt)
 	if ThemePrefs.Get("RainbowMode") and not HolidayCheer() then
 		textColor = Color.Black
 	end
-	if ThemePrefs.Get("VisualStyle") == "SRPG9" then
-		textColor = color(SL.SRPG9.TextColor)
+	if ThemePrefs.Get("VisualStyle") == "SRPG10" then
+		textColor = color(SL.SRPG10.TextColor)
 		shadowLength = 0.4
 	end
 
@@ -484,7 +482,7 @@ t[#t+1] = Def.ActorFrame{
 				SL.GrooveStats.Leaderboard = false
 				SL.GrooveStats.AutoSubmit = false
 				self:playcommand("MakeGrooveStatsRequest", {
-					endpoint="new-session.php?chartHashVersion="..SL.GrooveStats.ChartHashVersion,
+					endpoint="?action=newSession&chartHashVersion="..SL.GrooveStats.ChartHashVersion,
 					method="GET",
 					timeout=10,
 					callback=NewSessionRequestProcessor,
@@ -498,6 +496,13 @@ t[#t+1] = Def.ActorFrame{
 -- -----------------------------------------------------------------------
 -- Loads the UnlocksCache from disk for SRPG unlocks.
 LoadUnlocksCache()
+
+-- -----------------------------------------------------------------------
+-- Online Lobby Handler
+-- We only want one global instance of this, so we create it once but
+-- can get the same instance of the actor multiple times.
+
+t[#t+1] = CreateOnlineHandler()
 
 -- -----------------------------------------------------------------------
 -- SystemMessage stuff.

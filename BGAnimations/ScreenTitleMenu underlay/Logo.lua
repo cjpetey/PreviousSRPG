@@ -30,15 +30,15 @@ af[#af+1] = Def.Sprite{
 	end,
 	LoadImageCommand=function(self)
 		if style == "SRPG9" then
-			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG9/"..SL.SRPG9.GetLogo()))
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG9/logo_main (doubleres).png"))
 			self:zoom(0.225):vertalign(top)
 			self:y(-115):shadowlength(0)
 		elseif style == "SRPG8" then
-			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG8/"..SL.SRPG9.GetLogo()))
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG8/logo_main (doubleres).png"))
 			self:zoom(0.225):vertalign(top)
 			self:x(-15):y(-130):shadowlength(0)
 		elseif style == "SRPG7" then
-			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG7/"..SL.SRPG9.GetLogo()))
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG7/logo_main (doubleres).png"))
 			self:zoom(0.1):vertalign(top)
 			self:y(-130):shadowlength(0)
 		elseif style == "SRPG6" then
@@ -46,9 +46,13 @@ af[#af+1] = Def.Sprite{
 			self:zoom(0.55):vertalign(top)
 			self:y(-165):shadowlength(0)
 		elseif style == "SRPG5" then
-			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG5/"..SL.SRPG9.GetRPG5Logo()))
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG5/"..SL.SRPG10.GetRPG5Logo()))
 			self:zoom(0.7):vertalign(top)
 			self:y(-120):shadowlength(0)
+		elseif style == "SRPG10" then
+			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG10/logo_main (doubleres).png"))
+			self:zoom(0.07):vertalign(top)
+			self:y(-150):shadowlength(0)
 		else
 			local image = THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu (doubleres).png")
 			local imageAlt = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_VisualStyles/"..style.."/TitleMenuAlt (doubleres).png"

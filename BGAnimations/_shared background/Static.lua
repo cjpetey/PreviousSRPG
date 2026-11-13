@@ -132,14 +132,14 @@ else
 local af = Def.ActorFrame {
 	InitCommand=function(self)
 		self:diffusealpha(0)
-		self:visible(style == "SRPG9" or style == "SRPG8" or style == "SRPG7")
+		self:visible(style == "SRPG10" or style == "SRPG9" or style == "SRPG8" or style == "SRPG7")
 	end,
 	OnCommand=function(self)
 		self:accelerate(0.8):diffusealpha(1)
 	end,
 	VisualStyleSelectedMessageCommand=function(self)
 		local style = ThemePrefs.Get("VisualStyle")
-		if style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
+		if style == "SRPG10" or style == "SRPG9" or style == "SRPG8" or style == "SRPG7" then
 			self:visible(true)
 		else
 			self:visible(false)

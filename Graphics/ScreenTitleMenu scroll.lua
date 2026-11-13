@@ -38,7 +38,7 @@ t[#t+1] = LoadFont("Common Bold")..{
 				textColor = Color.White
 			end
 			if string.match(style, "SRPG") then
-				textColor = color(SL.SRPG9.TextColor)
+				textColor = color(SL.SRPG10.TextColor)
 			end
 			self:diffuse(textColor)
 		end

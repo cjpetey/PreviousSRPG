@@ -36,6 +36,16 @@ SL_WideScale = function(AR4_3, AR16_9)
 	return clamp(scale( SCREEN_WIDTH, 640, 854, AR4_3, AR16_9 ), math.min(AR4_3, AR16_9), math.max(AR4_3, AR16_9))
 end
 
+-- -----------------------------------------------------------------------
+BackgroundFilterValues = function()
+	return {
+		Off = 0,
+		Dark = 50,
+		Darker = 75,
+		Darkest = 95,
+	}
+end
+
 
 -- -----------------------------------------------------------------------
 -- get timing window in milliseconds
@@ -124,7 +134,7 @@ GetNotefieldX = function( player )
 	local PlayerOffset = SL[p].ActiveModifiers.NoteFieldOffsetX * (player == PLAYER_1 and -1 or 1)
 
 	local NumPlayersAndSides = ToEnumShortString( style:GetStyleType() )
-	return THEME:GetMetric("ScreenGameplay","Player".. p .. NumPlayersAndSides .."X") + PlayerOffset
+	return THEME:GetMetric(Branch.GameplayScreen(),"Player".. p .. NumPlayersAndSides .."X") + PlayerOffset
 end
 
 -- -----------------------------------------------------------------------
@@ -139,9 +149,8 @@ local NoteFieldWidth = {
 		double  = 512,
 		solo    = 384,
 		routine = 512,
-		-- couple and threepanel not supported in Simply Love at this time D:
-		-- couple = 256,
-		-- threepanel = 192
+		couple = 256,
+		threepanel = 192
 	},
 	-- pump's values are very similar to those used in dance, but curiously smaller
 	pump = {
@@ -149,6 +158,7 @@ local NoteFieldWidth = {
 		versus  = 250,
 		double  = 500,
 		routine = 500,
+		halfdouble = 300
 	},
 	-- These values for techno, para, and kb7 are the result of empirical observation
 	-- of the SM5 engine and should not be regarded as any kind of Truth.
@@ -1006,8 +1016,10 @@ GetPlayerAF = function(pn)
 			playerAF = player_af
 		end
 	end
-
-	return playerAF
+	-- ScreenEdit does not name its player ActorFrame, but does set its alias to
+	-- "PlayerP1" or "PlayerP2". GetChild will return the child if either the
+	-- name or alias matches.
+	return topscreen:GetChild("Player"..pn)
 end
 
 -- -----------------------------------------------------------------------
@@ -1050,4 +1062,3 @@ TotalCourseLengthPlayed = function(player)
 		return -1
 	end
 end
-

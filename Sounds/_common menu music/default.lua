@@ -13,7 +13,8 @@ local songs = {
 	SRPG6 = "SRPG6",
 	SRPG7 = "SRPG7",
 	SRPG8  = "SRPG8",
-	SRPG9  = "SRPG9"
+	SRPG9  = "SRPG9",
+	SRPG10  = "SRPG10"
 }
 
 -- retrieve the current VisualStyle from the ThemePrefs system
